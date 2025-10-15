@@ -1,12 +1,19 @@
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 
 app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
 
 var summaries = new[]
 {
@@ -25,7 +32,7 @@ app.MapGet("/weatherforecast", () =>
         .ToArray();
     return forecast;
 });
-
+app.MapControllers();
 app.Run();
 
 internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
